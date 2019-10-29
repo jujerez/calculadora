@@ -11,20 +11,24 @@
             <?php
             require __DIR__ . '/auxiliar.php';
             const OPS = ['+','-', '*', '/'];
+            $error = [];
 
             $op1 = param('op1');
             $op2 = param('op2');
             $op  = param('op');
 
-            if (comprobarParametros()) {
-
-                if (comprobarValores($op1, $op2, $op, OPS)){
-                    calcular($op1, $op2, $op);
-
-                } else {
-                    mensajeError('Los valores introducidos no no son correctos');
+            try {
+                comprobarParametros($errores);
+                // comprobar errores
+                comprobarValores($op1, $op2, $op, OPS);
+                calcular($op1, $op2, $op);
+                
+            } catch (Exception $e) {
+                foreach ($errores as $err) {
+                    # code...
                 }
             }
+            
             
             ?>
             <form action="" method="get">

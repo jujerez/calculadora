@@ -37,7 +37,14 @@
 
     function comprobarParametros() 
     {
-        return isset($_GET['op1'], $_GET['op2'], $_GET['op']);
+        $par = ['op1', 'op2', 'op'];
+        if (!empty($_GET)) {
+           if (!(empty(array_diff(array_keys($_GET),$par)) && 
+           empty(array_diff($par,array_keys($_GET))))) {
+               
+           }
+        }
+       
     }
 
     /**
