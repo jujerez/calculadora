@@ -11,42 +11,26 @@
             <?php
             require __DIR__ . '/auxiliar.php';
             const OPS = ['+','-', '*', '/'];
-            $error = [];
+            $errores = [];
 
-            $op1 = param('op1');
-            $op2 = param('op2');
-            $op  = param('op');
+            
 
+            pintarFormulario($op1, $op2, $op);
             try {
                 comprobarParametros($errores);
-                // comprobar errores
-                comprobarValores($op1, $op2, $op, OPS);
+                comprobarErrores($errores);
+                comprobarValores($op1, $op2, $op, OPS, $errores);
+                comprobarErrores($errores);
                 calcular($op1, $op2, $op);
                 
             } catch (Exception $e) {
-                foreach ($errores as $err) {
-                    # code...
+                foreach ($errores as $error) {
+                    mensajeError($error);
                 }
             }
             
             
             ?>
-            <form action="" method="get">
-
-            <label for="op1">Primer operando</label>
-            <input type="text" name="op1" value="<?=$op1?>">
-            <br>
-
-            <label for="op2">Segundo operando</label>
-            <input type="text" name="op2" value="<?=$op2?>">
-            <br>
-
-            <label for="op">Operación</label>
-            <input type="text" name="op" value="<?=$op?>">
-            <br>
-
-            <button type="submit">Enviar</button>
-
-            </form>
+            
         </body>
     </html>
