@@ -23,6 +23,7 @@
                 break;
 
             case '/':
+               
                 $op1/=$op2;
                 break;
 
@@ -43,20 +44,29 @@
             $errores[] = 'El operando no es correcto';
             
         }
+
+        if ($op3 == '/' && $op2 == 0) {
+            $errores[] = 'No se puede dividir por 0';
+        }
+
+        comprobarErrores($errores);
         
     }
 
-    function comprobarParametros() 
+    function comprobarParametros($par, &$errores) 
     {
-        $par = ['op1', 'op2', 'op'];
+        
         if (!empty($_GET)) {
-            if (empty(array_diff(array_keys($_GET),$par)) && 
-                 empty(array_diff($par,array_keys($_GET)))) {
+            if (empty(array_diff_key(($_GET),$par)) && 
+                 empty(array_diff_key($par,($_GET)))) {
+                     return $_GET;
             } else {
                 $errores[] = 'Los parametros recibidos no son correctos'; 
 
            }
         } 
+
+        return $par;
        
     }
 
@@ -78,7 +88,7 @@
        ?><div class="error"><?= $m ?> </div><?php
     }
 
-    function pintarFormulario($op1, $op2, $op) {
+    function pintarFormulario($op1, $op2, $op, $ops) {
 
         ?>
             <form action="" method="get">
@@ -92,13 +102,34 @@
             <br>
 
             <label for="op">Operación</label>
-            <input type="text" name="op" value="<?=$op?>">
-            <br>
+            
+            
+            <select name="op" id="op">
+            <?php foreach ($ops as $o ) : ?>
+
+                   <option value="<?= $o ?>" <?= selected($op, $o)?>>  
+                        <?= $o ?>
+                   </option>
+            <?php   endforeach ?> 
+            
+            </select>
 
             <button type="submit">Enviar</button>
 
             </form>
         <?php
 
+    }
+
+    function mostrarErrores($errores) 
+    {
+        foreach ($errores as $error) {
+            mensajeError($error);
+        }
+    }
+
+    function selected($op, $o)
+    {
+        return $op == $o ? 'selected' : '';
     }
 ?>
