@@ -108,21 +108,16 @@
                 <div class="row shadow mt-5 ">
                     <div class="col-12 shadow p-4">
                         <form action="" method="get">
-                            <div class="form-group">
-
-                                <label for="op1">Primer operando</label>
-                                <?=insertaInput($errores, $args)?>
-                                <?=mensajeError('op2',$errores)?>
+                            <div class="form-group"> 
+                                <?=insertaInput($errores, $args, 'op1')?>
+                                <?=mensajeError('op1',$errores)?>
                             </div>
                             <div class="form-group">
-                                <label for="op2">Segundo operando</label>
-                                <input type="text" class="form-control <?=isValid('op2',$errores)?>" name="op2" value="<?=$op2?>">
+                                <?=insertaInput($errores, $args, 'op2')?>
                                 <?=mensajeError('op2',$errores)?>
                             </div>
                             <div class="form-group">
                                 <label for="op">Operación</label>
-
-
                                 <select class="form-control <?=isValid('op',$errores)?>" name="op" id="op">
                                 <?php foreach ($ops as $o ) : ?>
 
@@ -165,18 +160,19 @@
         }
     }
 
-    function insertaInput($errores, $args) 
+    function insertaInput($errores, $args, $nombre) 
     { 
         extract($args);
-        $cadena1 = isValid('op1',$errores);
-        //$cadena2 = mensajeError('op1',$errores);
+        $is_valid = isValid($nombre,$errores);
+        $cad   = $nombre == 'op1' ? 'Primer' : 'Segundo';
+        $valor = $nombre == 'op1' ?  $op1    : $op2;
 
        return <<< EOF
-                  <input type="text" class="form-control {$cadena1}" name="op1" value="{$op1}"> 
+                  <label for="{$nombre}"> {$cad} operando</label> 
+                  <input type="text" class="form-control {$is_valid}" name="{$nombre}" value="{$valor}"> 
                   
               EOF;
-
-        
+ 
     }
 
 
