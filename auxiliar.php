@@ -111,8 +111,8 @@
                             <div class="form-group">
 
                                 <label for="op1">Primer operando</label>
-                                <input type="text"  class="form-control <?=isValid('op1',$errores)?>" name="op1" value="<?=$op1?>">
-                                <?=mensajeError('op1',$errores)?>
+                                <?=insertaInput($errores, $args)?>
+                                <?=mensajeError('op2',$errores)?>
                             </div>
                             <div class="form-group">
                                 <label for="op2">Segundo operando</label>
@@ -165,6 +165,19 @@
         }
     }
 
-    
+    function insertaInput($errores, $args) 
+    { 
+        extract($args);
+        $cadena1 = isValid('op1',$errores);
+        //$cadena2 = mensajeError('op1',$errores);
+
+       return <<< EOF
+                  <input type="text" class="form-control {$cadena1}" name="op1" value="{$op1}"> 
+                  
+              EOF;
+
+        
+    }
+
 
 ?>
