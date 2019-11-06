@@ -15,6 +15,7 @@
 
   <?php
             require __DIR__ . '/auxiliar.php';
+
             const OPS = ['+','-', '*', '/'];
             const PAR = ['op1' => 0, 'op2' => 0, 'op' => '+'];
             $errores = [];
@@ -22,16 +23,16 @@
             
 
             try {
-                extract(comprobarParametros(PAR,$errores));
+                $args = comprobarParametros(PAR, $errores);
                 comprobarErrores($errores);
-                comprobarValores($op1, $op2, $op, OPS, $errores);
-                calcular($op1, $op2, $op);
+                comprobarValores($args, OPS, $errores);
+                $args = calcular($args);
                 
             } catch (Exception $e) {
                 
             }
-            mostrarErrores($errores);
-            pintarFormulario($op1, $op2, $op, OPS);
+           
+            pintarFormulario($args, OPS, $errores);
             
             ?>
 
